@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+    <head>
+        <meta charset="utf-8">
+        <title>Exquifit - Activity & Fitness Tracking</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta name="description" content="Track you daily acitivities using FitBit and make new targets on the basis of those readings to Stay Fit and Fine.">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link type='text/css' href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600' rel='stylesheet'>
+
+        <link type="text/css" href="static/assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">        <!-- Font Awesome -->
+
+        <link type="text/css" href="static/assets/fonts/themify-icons/themify-icons.css" rel="stylesheet">              
+        <link type="text/css" href="static/assets/css/styles.css" rel="stylesheet">                                     
+
+        <link type="text/css" href="static/assets/plugins/codeprettifier/prettify.css" rel="stylesheet">                <!-- Code Prettifier -->        
+        <script src="/static/components/highcharts/highcharts.js"></script>
+        <script src="/static/components/highcharts/highcharts-more.js"></script>
+        <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+        <!--[if lt IE 10]>
+            <script type="text/javascript" src="assets/js/media.match.min.js"></script>
+            <script type="text/javascript" src="assets/js/respond.min.js"></script>
+            <script type="text/javascript" src="assets/js/placeholder.min.js"></script>
+        <![endif]-->
+        <!-- The following CSS are included as plugins and can be removed if unused-->
+        <link type="text/css" href="static/assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
+        <script type="text/javascript" src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+        </script> 
+          <style type="text/css">
+          .goog-te-banner-frame.skiptranslate{display:none!important;}
+          body{top:0px!important;}
+          </style>
+
+          
+          
+    </head>
+
+    <body class="animated-content">
+        
+        <header id="topnav" class="navbar navbar-default navbar-fixed-top" role="banner">
+            <div class="logo-area">
+                <span id="trigger-sidebar" class="toolbar-trigger toolbar-icon-bg">
+                    <a data-toggle="tooltips" data-placement="right" title="Toggle Sidebar">
+                        <span class="icon-bg">
+                            <i class="ti ti-menu"></i>
+                        </span>
+                    </a>
+                </span>
+                <a class="nav navbar-brand" href="/" style="width: 80px";>Exquifit</a>
+            </div><!-- logo-area -->
+
+            <ul class="nav navbar-nav toolbar pull-right">
+                
+                
+
+                            
+                
+                    <li class="dropdown toolbar-icon-bg">
+                    <a href="#" class="hasnotifications dropdown-toggle" data-toggle='dropdown'><span class="icon-bg"><i class="ti ti-bell"></i></span><span class="badge badge-deeporange" id="notificationListCount"></span></a>
+                    <div class="dropdown-menu notifications arrow">
+                        <div class="topnav-dropdown-header">
+                            <span>Notifications</span>
+                        </div>
+                        <div class="scroll-pane">
+                            <ul class="media-list scroll-content" id="notificationList">
+                                
+                            </ul>
+                        </div>
+                        <div class="topnav-dropdown-footer">
+                            <a href="#">See all notifications</a>
+                        </div>
+                    </div>
+                </li>
+
+
+                <span class="username" style=" margin-left: 8px; margin-right: 8px;">{{session['name']}}</span>
+
+                <a href="/logout"><button type="button" class="btn btn-default btn-sm" style="
+                    padding-top: 8px;
+                    padding-bottom: 8px;
+                    padding-left: 0px;
+                    border-left-width: 0px;
+                    border-bottom-width: 0px;
+                    border-right-width: 0px;
+                    padding-right: 8px;
+                    border-top-width: 0px;
+                    height: 56px;
+                    width: 56px;
+                    margin-right: 8px;
+                    margin-left: 8px;
+                ">
+                    <span class="glyphicon glyphicon-log-out"></span> Log out
+                </button></a>
+
+                
+            </ul>
+        </header>
+
+        <div id="wrapper">
+            <div id="layout-static">
+                <div class="static-sidebar-wrapper sidebar-default">
+                    <div class="static-sidebar">
+                        <div class="sidebar">
+                            <div class="widget">
+                                <div class="widget-body">
+                                    <div class="userinfo">
+                                        <div class="avatar">
+                                        <img src="/static/assets/demo/avatar/avatar_15.png" class="img-responsive img-circle"> 
+                                        </div>
+
+                                        <div class="info">
+                                            <span class="username">{{session['name']}}</span>
+                                            <span class="useremail">{{session['email']}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget stay-on-collapse" id="widget-sidebar">
+                                <nav role="navigation" class="widget-body">
+                                    <ul class="acc-menu">
+                                        <li class="nav-separator"><span>Explore</span></li>
+                                        <h2><li><a href="/dashboard"><i class="fa fa-dashboard"></i>&nbsp;
+                                        <span style="text-align: right;">Dashboard</span></a></li></h2>
+                                        
+                                        <h2><li><a href="/steps"><i class="fa fa-road"></i>&nbsp;
+                                        <span style="text-align: right;">Steps</span></a></li></h2>
+
+                                        <h2><li><a href="/calories"><i class="glyphicon glyphicon-fire"></i>
+                                        <span style="text-align: right;"> Calories</span></a></li></h2>
+
+                                        <h2><li><a href="/weight"><i class="glyphicon glyphicon-dashboard"></i>&nbsp; 
+                                        <span style="text-align: right;"> Weight</span></a></li></h2>
+
+                                        <h2><li><a href="/heartrate"><i class="glyphicon glyphicon-heart"></i> &nbsp;
+                                        <span style="text-align: right;"> Heart</span></a></li></h2>
+
+                                        <h3><li><a href="javascript:;"><i class="glyphicon glyphicon-cutlery">&nbsp;</i> 
+                                        <span style="text-align: right;"> Food</span></a>
+                                        </h3>
+                                            <ul class="acc-menu">
+                                            <h4>
+                                                <li><a href="/food">Enter Food Data</a></li>
+                                                <li><a href="/getrecommendation">Diet Recommendation</a></li>
+                                            </h4>
+                                            </ul>
+                                        </li>
+
+                                        <h2><li><a href="/logout"><i class="glyphicon glyphicon-log-out"></i>&nbsp;
+                                        <span>Logout</span></a></li></h2>
+
+                                    </ul>
+
+
+
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="static-content-wrapper">
+                    <div class="static-content">
+                        <div class="page-content">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h1 class="page-header">
+                                            Dashboard
+                                        </h1>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" data-widget-group="group-demo">
+                                    <div class="col-md-4">
+                                        <div class="panel panel-primary" data-widget='{"id" : "wiget1"}'>
+                                            <div class="panel-heading">
+                                                
+                                                <h2>Calories</h2>
+                                            </div>
+                                            <div class="panel-editbox" data-widget-controls=""></div>
+                                                <div class="panel-body">
+                                                        <div class="row" style="height: 70px">
+                                                                        <div class="col-xs-3">
+                                                                           <span style="font-size:5em;" class="glyphicon glyphicon-fire"></span>
+
+                                                                        </div>
+                                                                        <div class="col-xs-9 text-right">
+                                                                            <div class="huge">{{ calories|natural_number }} Calories</div>
+                                                                            <div>Burned Today</div>
+                                                                        </div>
+                                                        </div>
+                                                                
+                                                        <hr>
+                                                        
+                                                        <a href="/calories">
+                                                        <span class="pull-left">View Details</span>
+                                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                                        <div class="clearfix"></div>
+                                                        </a>
+                                                </div>
+                                        </div>
+
+
+                                        <div class="panel panel-inverse" data-widget='{"id" : "wiget2"}'>
+                                            <div class="panel-heading">
+                                                
+                                                <h2>Steps</h2>
+                                            </div>
+                                            <div class="panel-editbox" data-widget-controls=""></div>
+                                                <div class="panel-body">
+                                                        <div class="row" style="height: 70px">
+                                                            <div class="col-xs-3">
+                                                                <span style="font-size:5em;" class="fa fa-road"></span>
+                                                            </div>
+                                                            <div class="col-xs-9 text-right">
+                                                                <div class="huge">{{ steps|natural_number }} Steps</div>
+                                                                <div>Taken Today</div>
+                                                            </div>
+                                                        </div>
+                                                                
+                                                        <hr>
+                                                        
+                                                        <a href="/steps">
+                                                        <span class="pull-left">View Details</span>
+                                                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                                        <div class="clearfix"></div>
+                                                        </a>
+                                                </div>
+                                        </div>
+
+
+
+                                        <div class="panel panel-success" data-widget='{"id" : "wiget2"}'>
+                                            <div class="panel-heading">
+                                                
+                                                <h2>Weight</h2>
+                                            </div>
+                                            <div class="panel-editbox" data-widget-controls=""></div>
+                                                <div class="panel-body">
+                                                        <div class="row" style="height: 70px">
+                                                            <div class="col-xs-3">
+                                                                <span style="font-size:5em;" class="glyphicon glyphicon-dashboard"></span>
+                                                            </div>
+                                                            <div class="col-xs-9 text-right">
+                                                                <div class="huge">{{ weight|natural_number }} lbs</div>
+                                                                <div>Weight Changed</div>
+                                                            </div>
+                                                        </div>
+                                                                
+                                                        <hr>
+                                                        
+                                                        <a href="/weight">
+                                                            
+                                                                <span class="pull-left">View Details</span>
+                                                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                                                <div class="clearfix"></div>
+                                                            
+                                                        </a>
+                                                </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <div class="panel panel-danger" data-widget='{"id" : "wiget4"}'>
+                                            <div class="panel-heading">
+                                                
+                                                <h2>Progress</h2>
+                                            </div>
+                                            <div class="panel-editbox" data-widget-controls=""></div>
+                                                <div class="panel-body">
+                                                        <div class="row" style="height: 70px">
+                                                            <div class="col-xs-3">
+                                                                
+                                                                <div id="progress" ></div>
+
+                                                                <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
+
+                                                                <script type="text/javascript">
+                                                                var bar = new ProgressBar.Circle(progress, {
+                                                                  color: '#FFEA82',
+                                                                  trailColor: '#eee',
+                                                                  trailWidth: 1,
+                                                                  duration: 2000,
+                                                                  easing: 'bounce',
+                                                                  strokeWidth: 10,
+                                                                  from: {color: '#FFEA82', a:0},
+                                                                  to: {color: '#ED6A5A', a:1},
+                                                                  // Set default step function for all animate calls
+                                                                  step: function(state, circle) {
+                                                                    circle.path.setAttribute('stroke', state.color);
+                                                                     
+                                                                         var value = Math.round(circle.value() * 100);
+                                                                    if (value === 0) {
+                                                                      circle.setText('0 %');
+                                                                    } else {
+                                                                      circle.setText((value)+"%");
+                                                                    }
+                                                                         circle.text.style.color = state.color;
+
+                                                                  }
+                                                                });
+                                                                // bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+                                                                // bar.text.style.fontSize = '2rem';
+                                                                var progressVal="."+{{session['progressCaloriePercentage']}}
+                                                                bar.animate(progressVal);  // Number from 0.0 to 1.0
+                                                                </script>
+                                                            </div>
+                                                            <div class="col-xs-9 text-right">
+                                                                <div class="huge">{{ session['distanceLeft']|natural_number }} lbs</div>
+                                                                <div>Away from goal weight</div>
+                                                            </div>
+                                                        </div>
+                                                                
+                                                        <hr>
+                                                        
+                                                        <a href="/profileDetails">
+                                                                <span class="pull-left">Update Weight Details</span>
+                                                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                                                <div class="clearfix"></div>
+                                                        </a>
+                                                </div>
+                                        </div>
+
+                                        <div class="panel panel-success" data-widget='{"id" : "wiget5"}'>
+                                            <div class="panel-heading">
+                                                
+                                                <h2>Body Mass Index</h2>
+                                            </div>
+                                            <div class="panel-editbox" data-widget-controls=""></div>
+                                                <div class="panel-body" style="padding-bottom: 0px; padding-top: 0px;">
+                                                        <div class="row" >
+                                                            <div class="col-xs-12">
+                                                                
+                                                                <div id="container-speed"></div>
+
+                                                                
+                                                                <script type="text/javascript">
+                                                                $(function () {
+
+                                                                    var gaugeOptions = {
+
+                                                                        chart: {
+                                                                            type: 'solidgauge'
+
+                                                                        },
+
+                                                                        title: null,
+
+                                                                        pane: {
+                                                                            center: ['50%', '50%'],
+                                                                            size: '100%',
+                                                                            startAngle: -90,
+                                                                            endAngle: 90,
+                                                                            background: {
+                                                                                backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                                                                                innerRadius: '60%',
+                                                                                outerRadius: '100%',
+                                                                                shape: 'arc'
+                                                                            }
+                                                                        },
+
+                                                                        tooltip: {
+                                                                            enabled: true
+                                                                        },
+
+                                                                        // the value axis
+                                                                        yAxis: {
+                                                                            stops: [
+                                                                                [0.0, '#DF5353'], // underweight
+                                                                                [0.52, '#55BF3B'], // normal
+                                                                                [0.70, '#DDDF0D'], // overweight
+                                                                                [0.85, '#DF5353'] // obese
+                                                                            ],
+                                                                            lineWidth: 0,
+                                                                            minorTickInterval: null,
+                                                                            tickAmount: 2,
+                                                                            title: {
+                                                                                y: 100
+                                                                            },
+                                                                            labels: {
+                                                                                y: 16
+                                                                            }
+                                                                        },
+
+                                                                        plotOptions: {
+                                                                            solidgauge: {
+                                                                                dataLabels: {
+                                                                                    y: 5,
+                                                                                    borderWidth: 0,
+                                                                                    useHTML: true
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    };
+
+                                                                    // The speed gauge
+                                                                    var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
+                                                                        yAxis: {
+                                                                            min: 0,
+                                                                            max: 35,
+                                                                            title: {
+                                                                                text: 'Body Mass Index'
+                                                                            }
+                                                                        },
+
+                                                                        credits: {
+                                                                            enabled: false
+                                                                        },
+
+                                                                        series: [{
+                                                                            name: 'Body Mass Indes',
+                                                                            data: [{{Bmi}}], // BMI IS HERE
+                                                                            dataLabels: {
+                                                                                format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                                                                                    ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                                                                                       '</div>'
+                                                                            },
+                                                                            
+                                                                        }]
+
+                                                                    }));
+
+
+                                                                });
+
+                                                                </script>
+
+
+                                                            </div>
+                                                            
+                                                        </div>
+                                                                
+
+                                                </div>
+                                        </div>
+
+
+                                        
+
+                                    </div>
+
+
+                                    <div class="col-md-4">
+
+
+                                        <div class="panel panel-inverse" data-widget='{"id" : "wiget6"}'>
+                                            <div class="panel-heading">
+                                                
+                                                <h2>Calorie Budget</h2>
+                                            </div>
+                                            <div class="panel-editbox" data-widget-controls=""></div>
+                                                <div class="panel-body" style="padding: 0px;">
+                                                        
+                                                        
+                                                                
+                                                                <div id="calorie_budget"></div>
+
+                                                                
+                                                                <script type="text/javascript">
+                                                                    $(function() {
+                                                                      Highcharts.chart('calorie_budget', {
+                                                                        chart: {
+                                                                          plotBackgroundColor: null,
+                                                                          verticalAlign: 'middle',
+                                                                          plotBorderWidth: 0,
+                                                                          plotShadow: false
+                                                                        },
+                                                                        title: {
+                                                                          text: '  Calorie Budget',
+                                                                          align: 'center',
+                                                                          verticalAlign: 'middle',
+                                                                          x:25,
+                                                                          y: 30
+                                                                        },
+                                                                        tooltip: {
+                                                                          // pointFormat: '{point.percentage:.1f}%</b> {series.name}'
+                                                                          pointFormat: '{point.y}</b> {series.name}'
+                                                                        },
+                                                                        plotOptions: {
+                                                                          pie: {
+                                                                            dataLabels: {
+                                                                              enabled: true,
+                                                                              distance: 5,
+                                                                              style: {
+                                                                                fontWeight: 'bold',
+                                                                                color: 'black'
+                                                                              }
+                                                                            },
+                                                                            startAngle: -90,
+                                                                            endAngle: 90,
+
+                                                                          }
+                                                                        },
+                                                                        series: [{
+                                                                          type: 'pie',
+                                                                          name: 'Calories',
+                                                                          innerSize: '50%',
+                                                                          data: [
+                                                                            ['Consumed', {{ caloriesConsumed }}],
+                                                                            ['Burned', {{ calories }}],
+                                                                            ['Available', {{ caloriesEstimated}}]
+                                                                          ]
+                                                                        }]
+                                                                      });
+                                                                    });
+
+                                                                    </script>            
+
+                                                </div>
+                                        </div>
+
+
+                                        <div class="panel panel-danger" data-widget='{"id" : "wiget7"}'>
+                                            <div class="panel-heading">
+                                                
+                                                <h2>Heart Rate</h2>
+                                            </div>
+                                            <div class="panel-editbox" data-widget-controls=""></div>
+                                                <div class="panel-body">
+                                                        <div class="row" style="height: 70px">
+                                                            <div class="col-xs-4">
+                                                                
+                                                                <div id="heart_rate">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 100 100">
+                                                                          <path fill-opacity="0" stroke-width="1" stroke="#bbb" d="M81.495,13.923c-11.368-5.261-26.234-0.311-31.489,11.032C44.74,13.612,29.879,8.657,18.511,13.923  C6.402,19.539,0.613,33.883,10.175,50.804c6.792,12.04,18.826,21.111,39.831,37.379c20.993-16.268,33.033-25.344,39.819-37.379  C99.387,33.883,93.598,19.539,81.495,13.923z"/>
+                                                                          <path id="heart-path" fill-opacity="0" stroke-width="3" stroke="#ED6A5A" d="M81.495,13.923c-11.368-5.261-26.234-0.311-31.489,11.032C44.74,13.612,29.879,8.657,18.511,13.923  C6.402,19.539,0.613,33.883,10.175,50.804c6.792,12.04,18.826,21.111,39.831,37.379c20.993-16.268,33.033-25.344,39.819-37.379  C99.387,33.883,93.598,19.539,81.495,13.923z"/>
+                                                                        </svg>
+                                                                </div>
+
+                                                                <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
+
+                                                                <script type="text/javascript">
+                                                                    var bar = new ProgressBar.Path('#heart-path', {
+                                                                      easing: 'easeInOut',
+                                                                      duration: 3000
+                                                                    });
+
+                                                                    bar.set(0);
+                                                                    bar.animate({{ heartRate|natural_number }}/100);  // Number from 0.0 to 1.0
+
+                                                                </script>
+
+
+                                                            </div>
+                                                            <div class="col-xs-8 text-right">
+                                                                <div class="huge">{{ heartRate|natural_number }}</div>
+                                                                <div>Beats Per Minute</div>
+                                                            </div>
+                                                        </div>
+                                                                
+                                                        <hr>
+                                                        
+                                                        <a href="/heartrate">
+                                                                <span class="pull-left">View Details</span>
+                                                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                                                <div class="clearfix"></div>
+                                                        </a>
+                                                </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                
+
+                            
+                            
+
+                        
+
+
+   
+                        <div class="row" data-widget-group="group-demo">
+                            
+
+                            <div class="col-md-6">
+                                        <div class="panel panel-midnightblue" data-widget='{"id" : "wiget7"}'>
+                                            <div class="panel-heading">
+                                                <h2>Weekly Steps Count</h2>
+                                            </div>
+                                            <div class="panel-editbox" data-widget-controls=""></div>
+                                                <div class="panel-body" style="padding: 0px;">   
+                                                    <div id="container" ></div>
+                                                </div>
+                                        </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                        <div class="panel panel-midnightblue" data-widget='{"id" : "wiget8"}'>
+                                            <div class="panel-heading">
+                                                <h2>Weekly Weight</h2>
+                                            </div>
+                                            <div class="panel-editbox" data-widget-controls=""></div>
+                                                <div class="panel-body" style="padding: 0px;">   
+                                                    <div id="container1"></div>
+                                                </div>
+                                        </div>
+                            </div>
+
+                            
+                        </div>
+
+                        <script type="text/javascript">
+
+                            $(function () {
+                                Highcharts.chart('container', {
+                                    chart: {
+                                        zoomType: 'x'
+                                    },
+                                    title: {
+                                        text: 'Step Counts Quick View',
+                                        x: -20 //center
+                                    },
+                                    // subtitle: {
+                                    //     text: 'Source: WorldClimate.com',
+                                    //     x: -20
+                                    // },
+                                    xAxis: {
+                                        categories: [{% for step in weights%}"{{ step.dateTime }}"{% if not loop.last %},{% endif %}{% endfor %}]
+                                    },
+                                    yAxis: {
+                                        title: {
+                                            text: '{{ weight_unit }}'
+                                        },
+                                        plotLines: [{
+                                            value: 0,
+                                            width: 1,
+                                            color: '#808080'
+                                        }]
+                                    },
+                                    tooltip: {
+                                        valueSuffix: ' Steps'
+                                    },
+                                    legend: {
+                                        layout: 'vertical',
+                                        align: 'right',
+                                        verticalAlign: 'middle',
+                                        borderWidth: 0
+                                    },
+                                    series: [{
+                                        type:'area',
+                                        name: 'Steps',
+                                        data: [{% for step in chartdata%}{{ step.value }}{% if not loop.last %},{% endif %}{% endfor %}]
+                                    }]
+                                });
+                            });
+
+                            $(function () {
+                                Highcharts.chart('container1', {
+                                    chart: {
+                                        type: 'areaspline'
+                                    },
+                                    title: {
+                                        text: 'Weight Quick View',
+                                        x: -20 //center
+                                    },
+                                    // subtitle: {
+                                    //     text: 'Source: WorldClimate.com',
+                                    //     x: -20
+                                    // },
+                                    xAxis: {
+                                        categories: [{% for step in weights%}"{{ step.dateTime }}"{% if not loop.last %},{% endif %}{% endfor %}]
+                                    },
+                                    yAxis: {
+                                        title: {
+                                            text: '{{ weight_unit }}'
+                                        },
+                                        plotLines: [{
+                                            value: 0,
+                                            width: 1,
+                                            color: '#808080'
+                                        }]
+                                    },
+                                    tooltip: {
+                                        valueSuffix: ' lbs'
+                                    },
+                                    legend: {
+                                        layout: 'vertical',
+                                        align: 'right',
+                                        verticalAlign: 'middle',
+                                        borderWidth: 0
+                                    },
+                                    series: [{
+                                        name: 'Weight',
+                                        data: [{% for step in weights%}{{ step.value }}{% if not loop.last %},{% endif %}{% endfor %}]
+                                    }]
+                                });
+                            });
+
+                            </script>
+
+                            <div class="panel-body">
+                                <div id="worldmap" style="height: 1px; width: 1%;"></div>
+                            </div>
+                        </div>  
+                        
+
+                       
+                                
+
+
+
+
+
+                            </div> <!-- .container-fluid
+
+                    </div> <!-- #page-content -->
+                </div>
+                <footer role="contentinfo">
+                    <div class="clearfix">
+                        <ul class="list-unstyled list-inline pull-left">
+                            <li><h6 style="margin: 0;">&copy; Exquifit - Activity & Fitness Tracking</h6></li>
+                        </ul>
+                        
+                        <button class="pull-right btn btn-link btn-xs hidden-print" id="back-to-top"><i class="ti ti-arrow-up"></i></button>
+                    </div>
+                        
+                    <div id="google_translate_element"></div>    
+                    <script type="text/javascript">
+                        $.cookie('googtrans', '/en/en');
+                        function googleTranslateElementInit() {
+                            new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                        }
+                    </script>
+                        
+                </footer>
+                </div>
+            </div>
+        </div>
+
+
+    
+
+<script type="text/javascript" src="static/assets/js/jqueryui-1.10.3.min.js"></script>                      <!-- Load jQueryUI -->
+<script type="text/javascript" src="static/assets/js/enquire.min.js"></script>                                     <!-- Load Enquire -->
+
+<script type="text/javascript" src="static/assets/plugins/velocityjs/velocity.min.js"></script>                    <!-- Load Velocity for Animated Content -->
+<script type="text/javascript" src="static/assets/plugins/velocityjs/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="static/assets/plugins/wijets/wijets.js"></script>                         <!-- Wijet -->
+
+<script type="text/javascript" src="static/assets/plugins/codeprettifier/prettify.js"></script>                <!-- Code Prettifier  -->
+<script type="text/javascript" src="static/assets/plugins/bootstrap-switch/bootstrap-switch.js"></script>      
+
+<script type="text/javascript" src="static/assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js"></script>  <!-- Bootstrap Tabdrop -->
+
+<script type="text/javascript" src="static/assets/plugins/iCheck/icheck.min.js"></script>                      <!-- iCheck -->
+
+<script type="text/javascript" src="static/assets/plugins/nanoScroller/js/jquery.nanoscroller.min.js"></script> <!-- nano scroller -->
+
+<script type="text/javascript" src="static/assets/js/application.js"></script>
+<script type="text/javascript" src="static/assets/demo/demo.js"></script>
+<script type="text/javascript" src="static/assets/demo/demo-switcher.js"></script>
+
+<script>
+
+    //function that listens to Socket and do something when notification comes
+    function listen() {
+        var source = new WebSocket('wss://' + window.location.host + '/ws');
+        source.onmessage = function(msg) {
+        var message = JSON.parse(msg.data);
+        var count=0;
+        if($('#notificationListCount').text()!='')
+            count=parseInt($('#notificationListCount').text());
+        if(message['recommedation']!='')
+            {
+            $('#notificationList').append('<li class="media notification-success"><a href="#"><div class="media-left"><span class="notification-icon"><i class="ti ti-check"></i></span></div><div class="media-body"><h4 class="notification-heading">'+message['recommedation']+'</h4><span class="notification-time">8 mins ago</span></div></a></li>');
+count++;
+            }
+        if(message['calorieAvailable']!='')
+            {
+            $('#notificationList').append('<li class="media notification-success"><a href="#"><div class="media-left"><span class="notification-icon"><i class="ti ti-check"></i></span></div><div class="media-body"><h4 class="notification-heading">'+message['calorieAvailable']+'</h4><span class="notification-time">8 mins ago</span></div></a></li>');
+count++;
+            }
+        if(message['calorieExceeds']!='')
+            {
+            $('#notificationList').append('<li class="media notification-success"><a href="#"><div class="media-left"><span class="notification-icon"><i class="ti ti-check"></i></span></div><div class="media-body"><h4 class="notification-heading">'+message['calorieExceeds']+'</h4><span class="notification-time">8 mins ago</span></div></a></li>');
+count++;
+            }
+            $('#notificationListCount').text(count);
+            //console.log(message['calorieExceeds'])
+        //console.log(message['calorieAvalaible'])
+            return false;
+        }
+    }
+
+    $(document).ready(function(){
+        listen();
+    });
+</script>
+
+    </body>
+
+
+</html>

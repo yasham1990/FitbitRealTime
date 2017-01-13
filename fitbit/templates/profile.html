@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row-fluid">
+        <div class="span2">
+            <img src="{{ session.user_profile.user.avatar }}" class="img-polaroid" alt="Image">
+        </div>
+        <div class="span6">
+            <h2>{{ session.user_profile.user.displayName }}'s Fitbit Summary</h2>
+            <ul>
+                <li>Battery Level: {{ session.device_info.0.battery }}</li>
+                <li>Last Sync: {{ session.device_info.0.lastSyncTime|natural_time|capitalize }}</li>
+                <li>Fitbit Type: {{ session.device_info.0.deviceVersion }}</li>
+            </ul>
+        </div>
+    </div>
+    <hr>
+{% endblock %}

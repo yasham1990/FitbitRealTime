@@ -1,0 +1,286 @@
+\<!DOCTYPE html>
+<html lang="en" class="coming-soon">
+
+
+	<head>
+<style>
+#pswd_info {
+    display:none;
+}
+
+#pswd_info h4 {
+    margin:0 0 10px 0;
+    padding:0;
+    font-weight:normal;
+}
+
+#pswd_info {
+    position:absolute;
+    top:170px;
+    width:250px;
+    padding:15px;
+    background:#fefefe;
+    font-size:.875em;
+    border-radius:5px;
+    box-shadow:0 1px 3px #ccc;
+    border:1px solid #ddd;
+}
+
+.invalid {
+    background:url(./static/invalid.png) no-repeat 0 50%;
+    padding-left:22px;
+    line-height:24px;
+    color:#ec3f41;
+}
+.valid {
+    background:url(./static/valid.png) no-repeat 0 50%;
+    padding-left:22px;
+    line-height:24px;
+    color:#3a7d34;
+}
+
+</style>
+
+	    <meta charset="utf-8">
+	    <title>Login Form</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-touch-fullscreen" content="yes">
+	    <meta name="author" content="KaijuThemes">
+        <meta name="description" content="Track you daily acitivities using FitBit and make new targets on the basis of those readings to Stay Fit and Fine.">
+	    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600' rel='stylesheet' type='text/css'>
+	    <link type="text/css" href="static/assets/plugins/iCheck/skins/minimal/blue.css" rel="stylesheet">
+	    <link type="text/css" href="static/assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	    <link type="text/css" href="static/assets/fonts/themify-icons/themify-icons.css" rel="stylesheet">               <!-- Themify Icons -->
+	    <link type="text/css" href="static/assets/css/styles.css" rel="stylesheet">
+		<script type="text/javascript" src="static/assets/js/jquery-1.10.2.min.js"></script> 							<!-- Load jQuery -->
+		<script type="text/javascript" src="static/assets/js/jqueryui-1.10.3.min.js"></script> 							<!-- Load jQueryUI -->
+		<script type="text/javascript" src="static/assets/js/bootstrap.min.js"></script> 								<!-- Load Bootstrap -->
+		<script type="text/javascript" src="static/assets/js/enquire.min.js"></script> 
+		<script type="text/javascript" src="static/assets/plugins/nanoScroller/js/jquery.nanoscroller.min.js"></script> <!-- nano scroller -->
+			<script type="text/javascript" src="static/assets/plugins/velocityjs/velocity.min.js"></script>					<!-- Load Velocity for Animated Content -->
+	<script type="text/javascript" src="static/assets/plugins/velocityjs/velocity.ui.min.js"></script>
+
+	<script type="text/javascript" src="static/assets/plugins/wijets/wijets.js"></script>     					<!-- Wijet -->
+
+	<script type="text/javascript" src="static/assets/plugins/codeprettifier/prettify.js"></script> 				<!-- Code Prettifier  -->
+	<script type="text/javascript" src="static/assets/plugins/bootstrap-switch/bootstrap-switch.js"></script> 		<!-- Swith/Toggle Button -->
+
+	<script type="text/javascript" src="static/assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js"></script>  <!-- Bootstrap Tabdrop -->
+
+	<script type="text/javascript" src="static/assets/plugins/iCheck/icheck.min.js"></script>     					<!-- iCheck -->
+
+	<script type="text/javascript" src="static/assets/js/application.js"></script>
+	<script type="text/javascript" src="static/assets/demo/demo.js"></script>
+	<script type="text/javascript" src="static/assets/demo/demo-switcher.js"></script>
+	
+	    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries. Placeholdr.js enables the placeholder attribute -->
+	    <!--[if lt IE 9]>
+	        <link type="text/css" href="assets/css/ie8.css" rel="stylesheet">
+	        <script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+
+	    <!-- The following CSS are included as plugins and can be removed if unused-->
+    </head>
+
+<body class="focused-form animated-content">
+        
+        
+<div class="container" id="registration-form">
+	<a href="index.html" class="login-logo"><img src="static/assets/img/logo-big.png"></a>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="height:50px;">
+					<h2>Registration Form</h2>
+					<p style="text-align:right">Create your free Account - Step 1 of 2</p>
+				</div>
+				<div class="panel-body">
+					<form action="/users/new" method="Post" onsubmit="return validateForm();" class="form-horizontal">
+						
+						<div class="form-group mb-md">
+							<label class="col-xs-4 control-label">Name</label>
+	                        <div class="col-xs-8">
+	                        	<input type="text" class="form-control" name="name" id="name" placeholder="Name" required autofocus>
+	                        </div>
+						</div>
+						<div class="form-group mb-md">
+							<label for="Email" class="col-xs-4 control-label">Email</label>
+	                        <div class="col-xs-8">
+	                        	<input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+<span id="incorrect_email_message"></span>
+	                        </div>
+						</div>
+						<div class="form-group mb-md">
+							<label for="Password" class="col-xs-4 control-label">Password</label>
+	                        <div class="col-xs-8">
+	                        	<input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+         <span id="message"></span>
+		 <progress min="0" max="100" value="0" id="meter" style="display: none;">0 out of 100</progress><br>	
+	                        </div>
+						</div>
+
+						<div class="panel-footer"></div>
+						<div class="clearfix">
+							<button type="submit" class="btn btn-primary pull-left">Submit</button>
+							<a href="/login" class="btn btn-default pull-right">Already Registered? Login</a>
+							
+						</div>
+					</form>
+					
+				</div>
+				
+			</div>
+					<div class="clearfix">
+		                        <ul class="list-unstyled list-inline pull-left">
+		                            <li><h6 style="margin: 0;">&copy; Exquifit - Activity & Fitness Tracking</h6></li>
+		                        </ul>
+		                    </div>
+		                        
+		                    <div id="google_translate_element"></div>    
+		                    <script type="text/javascript">
+		                        $.cookie('googtrans', '/en/en');
+		                        function googleTranslateElementInit() {
+		                            new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+		                        }
+		                    </script>
+
+		</div>
+
+	</div>
+</div>
+
+<script>
+
+$(document).ready(function() {
+
+	  $('#email').keyup(function() {
+	  var email_message = document.getElementById("incorrect_email_message"); 
+	  var reg_email = /\S+@\S+\.\S+/;
+		if(!reg_email.test($(this).val()));
+			 {
+				 email_message.innerHTML = "Please enter email in proper format";
+				 email_message.style.color = "red";
+			 }
+	   if(reg_email.test($(this).val()))
+		 {
+				 email_message.innerHTML = "";
+		 }
+  });
+  
+$('#password').keyup(function() {
+var pswd = $(this).val();
+var uname = $("#uname").val();
+var strength = 0;
+//lower-case letter
+    if ( pswd.match(/[a-z]/) ) {
+    $('#lower').removeClass('invalid').addClass('valid');
+	strength++;
+} else {
+    $('#lower').removeClass('valid').addClass('invalid');
+}
+
+//upper-case letter
+if ( pswd.match(/[A-Z]/) ) {
+    $('#upper').removeClass('invalid').addClass('valid');
+	strength++;
+} else {
+    $('#upper').removeClass('valid').addClass('invalid');
+}
+
+//validate number
+if ( pswd.match(/[!#$%]/) ) {
+    $('#special').removeClass('invalid').addClass('valid');
+	strength++;
+} else {
+    $('#special').removeClass('valid').addClass('invalid');
+}
+
+//validate special char
+if ( pswd.match(/\d/) ) {
+    $('#number').removeClass('invalid').addClass('valid');
+	strength++;
+} else {
+    $('#number').removeClass('valid').addClass('invalid');
+}
+
+//*7-20 characters in length
+if ( pswd.length >= 7 && pswd.length <= 20) {
+        $('#length').removeClass('invalid').addClass('valid');
+	strength++;
+} else {
+	$('#length').removeClass('valid').addClass('invalid');
+	
+}
+
+if(strength===5 && pswd.length == 7)
+{
+changeStyle("Weak","red",25);
+}
+else if(strength===5 && pswd.length >= 7 && pswd.length <= 10)
+{
+changeStyle("Good","darkorange",50);
+}
+else if(strength===5 && pswd.length >= 11 && pswd.length <= 15)
+{
+changeStyle("Strong","green",75);
+}
+else if(strength===5 && pswd.length >= 16 && pswd.length <= 20)
+{
+changeStyle("Very Strong","darkgreen",100);
+}
+else if(pswd.length<1)
+{
+var meter = document.getElementById('meter');
+var message = document.getElementById("message");
+meter.style.display = 'none';
+message.innerHTML = '';
+}
+else
+{
+changeStyle("Weak","red",25);
+}
+}).focus(function() {
+    $('#pswd_info').show();
+}).blur(function() {
+    $('#pswd_info').hide();
+});
+
+  });
+function changeStyle(str, col,meterval){
+
+	var meter = document.getElementById('meter');
+	var message = document.getElementById("message");
+	var color = col;
+	meter.style.display = 'inline-block';
+	message.innerHTML = str;
+	meter.value = meterval;
+	message.style.color = color;
+}
+
+function validateForm(){
+
+
+alert("Registration Successful!!");
+
+}
+
+</script>
+	<!-- End loading site level scripts -->
+    <!-- Load page level scripts-->
+    
+    <!-- End loading page level scripts-->
+    </body>
+<div id="pswd_info" style="display: none" >
+    <h4>Password must meet the following requirements, use only English Characters A-z,0-9,(!,#,$,%):</h4>
+    <ul>
+        <li id="upper" class="invalid"><strong>1 upper-case letter</strong></li>
+        <li id="lower" class="invalid"><strong>1 lower-case letter</strong></li>
+        <li id="number" class="invalid"><strong>1 number</strong></li>
+		<li id="special" class="invalid"><strong>1 special character</strong></li>
+        <li id="length" class="invalid"><strong>7-20 characters</strong></li>
+    </ul>
+</div>
+
+</html>

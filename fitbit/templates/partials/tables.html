@@ -1,0 +1,63 @@
+<div class="row">
+        <div class="col-lg-1">
+        </div>
+        <div class="col-lg-10 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> {{ chart.title }}
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div id="highchart-{{ chart.id }}" class="chart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1">
+        </div>
+    </div>
+
+
+
+                                            <div data-widget-group="group1">
+                                                <div class="row">
+                                                    <div class="col-lg-1"></div>
+                                                    <div class="col-lg-10 col-md-6">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                                <h2>Hear Rate Today</h2>
+                                                                <div class="panel-ctrls"></div>
+                                                            </div>
+                                                            <div class="panel-body no-padding">
+                                                                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                                                    <thead>
+
+                                                                        <tr>
+                                                                            <th>Time</th>
+                                                                            <th>BPM</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                            {% for heart in heartdata%}
+                                                                            <tr class="odd gradeX">
+                                                                            
+                                                                            <td>{{ heart.time }}</td>
+                                                                           
+                                                                            
+
+                                                                            <td>{{ heart.value }}</td>
+                                                                               
+                                                                           </tr>
+                                                                           {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="panel-footer"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-1"></div>
+                                                </div>
+                                            </div>
+        
+<script type="text/javascript" src="static/assets/plugins/datatables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="static/assets/plugins/datatables/dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="static/assets/demo/demo-datatables.js"></script>

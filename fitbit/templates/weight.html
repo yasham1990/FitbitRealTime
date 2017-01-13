@@ -1,0 +1,398 @@
+{% extends "base.html" %}
+{% set active_age = "weight" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Weight
+            </h1>
+        </div>
+    </div>
+
+    
+
+    <div class="row">
+        <div class="col-xs-12">
+    
+                {% with stats=statsbar %}
+                    {% include "partials/statsbar.html" %}
+                {% endwith %}
+
+                <!-- {% for chart in charts %}
+                    {% include "partials/chart.html" %} -->
+
+                <!-- {% endfor %} -->
+
+
+                <div class="row" >
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <div class="panel panel-default" >
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Weight Fluctuations for Past Month
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="highchart-weight" class="chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+
+                </div>
+
+                <div class="row">
+                        <div class="col-md-1" ></div>
+                        <div class="col-md-10" >
+                            <div class="panel panel-default" >
+                                <div class="panel-body">
+                                        <div data-widget-group="group1">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="panel panel-default" >
+                                                        <div class="panel-heading">
+                                                            <h2> Weight Fluctuations for Past Month</h2>
+                                                            <div class="panel-ctrls"></div>
+                                                        </div>
+                                                        <div class="panel-body no-padding">
+                                                            
+                                                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered datatables" id="editable">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Date</th>
+                                                                        <th>Weight (lbs)</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for weight in weights %}
+                                                                    <tr class="odd gradeX">
+                                                                        <td>{{weight.time}}</td>
+                                                                        <td>{{weight.weight}}</td>
+                                                                    </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table><!--end table-->
+                                                        </div>
+                                                        <div class="panel-footer"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1" ></div>
+                </div>
+
+
+                <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Average Weight All Time
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="highchart-allweight" class="chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                </div>
+
+                
+
+                <div class="row">
+                    <div class="col-md-1"></div>
+                        <div class="col-md-10" >
+                            <div class="panel panel-default" >
+                                <div class="panel-body">
+                                    <div data-widget-group="group2">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="panel panel-default" >
+                                                    <div class="panel-heading">
+                                                        <h2>Inline Data Tables editing</h2>
+                                                        <div class="panel-ctrls"></div>
+                                                    </div>
+                                                    <div class="panel-body no-padding">
+                                                        
+                                                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered datatables" id="editable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Date</th>
+                                                                    <th>Weight</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% for weight in all_weight %}
+                                                                <tr class="odd gradeX">
+                                                                    <td>{{weight.dateTime}}</td>
+                                                                    <td>{{weight.value}}</td>
+                                                                </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table><!--end table-->
+                                                    </div>
+                                                    <div class="panel-footer"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                </div>
+
+                
+
+                <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Monthly Boxplot
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="highchart-boxplot" class="chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+
+                </div>
+
+
+
+                <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Yearly Cycle
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="highchart-yearcycle" class="chart"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+                        <div class="col-md-5">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Averages for Periods
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="highchart-period" class="chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+
+                </div>
+            
+
+                
+            
+                
+
+
+            {% endblock %}
+
+            {% block scripts %}
+        </div>
+    </div>
+
+
+
+    <script>
+        $(function () {
+            $('#highchart-weight').highcharts({
+                chart: {
+                    zoomType: 'x'
+                },
+                credits: {
+                    enabled: false
+                },
+                title: {
+                    text: 'Weight Fluctuation for Past Month'
+                },
+                legend: {
+                    enabled: false
+                },
+                xAxis: {
+                    type: 'datetime'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Weight'
+                    }
+                },
+                series: [
+                    {
+                        name: 'Weight',
+                        type: 'spline',
+                        data: [{% for day in chartdata%}
+                            [getDate("{{ day.day }}"), {{ day.weight }}]{% if not loop.last %},{% endif %}
+                        {% endfor %}]
+                    },
+                    {
+                        name: 'Weight Error',
+                        type: 'errorbar',
+                        data: [{% for day in chartdata%}
+                            [getDate("{{ day.day }}"), {{ day.error.0 }}, {{ day.error.1 }}]{% if not loop.last %},{% endif %}
+                        {% endfor %}]
+                    }
+                ]
+            });
+
+            $('#highchart-allweight').highcharts({
+                chart: {
+                    zoomType: 'x'
+                },
+                title: {
+                    text: 'Daily Average Weight',
+                    x: -20 //center
+                },
+                credits: {
+                    enabled: false
+                },
+                xAxis: {
+                    type: 'datetime',
+                    categories: [{% for step in all_weight%}"{{ step.dateTime }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+                },
+                yAxis: {
+                    title: {
+                        text: '{{ weight_unit }}'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [{
+                    name: 'Weight',
+                    data: [{% for step in all_weight%}{{ step.value }}{% if not loop.last %}, {% endif %}{% endfor %}]
+                }]
+            });
+
+            $('#highchart-boxplot').highcharts({
+                chart: {
+                    zoomType: 'x',
+                    type: 'boxplot'
+                },
+                title: {
+                    text: 'Weight by Month'
+                },
+                credits: {
+                    enabled: false
+                },
+                legend: {
+                    enabled: false
+                },
+                xAxis: {
+                    categories: [{% for month in boxplot%}"{{ month.month }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+                },
+                yAxis: {
+                    title: {
+                        text: '{{ weight_unit }}'
+                    }
+                },
+                series: [{
+                    name: 'Weight',
+                    data: [{% for month in boxplot%}{{ month.plot }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                }, {
+                    name: 'Outlier',
+                    color: Highcharts.getOptions().colors[0],
+                    type: 'scatter',
+                    data: [{% for month in boxplot%}
+                        {% if month.outliers %}
+                            [{{ month.index }}, {% for outlier in month.outliers %}{{ outlier }}{% if not loop.last %}, {% endif %}{% endfor %}]{% if not loop.last %},{% endif %}
+                        {% endif %}
+                    {% endfor %}],
+                    marker: {
+                        fillColor: 'white',
+                        lineWidth: 1,
+                        lineColor: Highcharts.getOptions().colors[0]
+                    }
+                }]
+            });
+
+            $('#highchart-yearcycle').highcharts({
+
+                chart: {
+                    zoomType: 'x'
+                },
+
+                title: {
+                    text: 'Yearly Cycle'
+                },
+
+                legend: {
+                    enabled: true
+                },
+                credits: {
+                    enabled: false
+                },
+                xAxis: {
+                    categories: ['Jan', 'Feb', 'Mar', "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+                },
+
+                yAxis: {
+                    title: {
+                        text: '{{ weight_unit }}'
+                    }
+                },
+
+                series: {{ yearcycle|safe }}
+
+            });
+
+            $('#highchart-period').highcharts({
+
+                chart: {
+                    zoomType: 'x'
+                },
+
+                title: {
+                    text: 'Average and Stats for Decreasing Periods '
+                },
+                credits: {
+                    enabled: false
+                },
+                legend: {
+                    enabled: true
+                },
+
+                xAxis: {
+                    categories: ['All Time', 'Year', 'Month', "Week"]
+                },
+
+                yAxis: {
+                    title: {
+                        text: '{{ weight_unit }}'
+                    }
+                },
+                series: {{ periods|safe }}
+
+            });
+        });
+    </script>
+
+
+{% endblock %}

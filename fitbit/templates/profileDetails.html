@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+    <head>
+        <meta charset="utf-8">
+        <title>Exquifit - Activity & Fitness Tracking</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta name="description" content="Track you daily acitivities using FitBit and make new targets on the basis of those readings to Stay Fit and Fine.">
+   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="/static/components/jquery/dist/jquery.min.js"></script>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link type='text/css' href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600' rel='stylesheet'>
+
+        <link type="text/css" href="static/assets/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">        <!-- Font Awesome -->
+
+        <link type="text/css" href="static/assets/fonts/themify-icons/themify-icons.css" rel="stylesheet">              
+        <link type="text/css" href="static/assets/css/styles.css" rel="stylesheet">                                     
+
+        <link type="text/css" href="static/assets/plugins/codeprettifier/prettify.css" rel="stylesheet">                <!-- Code Prettifier -->        
+       
+
+        <!--[if lt IE 10]>
+            <script type="text/javascript" src="assets/js/media.match.min.js"></script>
+            <script type="text/javascript" src="assets/js/respond.min.js"></script>
+            <script type="text/javascript" src="assets/js/placeholder.min.js"></script>
+        <![endif]-->
+        <!-- The following CSS are included as plugins and can be removed if unused-->
+        <link type="text/css" href="static/assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
+
+        <div id="google_translate_element"></div>
+                        
+                        <script type="text/javascript">
+                            $.cookie('googtrans', '/en/en');
+                            </script>
+                            <script type="text/javascript">
+                                function googleTranslateElementInit() {
+                                    new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+                                }
+                            </script>
+
+    </head>
+
+    <body class="animated-content">
+        
+        <header id="topnav" class="navbar navbar-default navbar-fixed-top" role="banner">
+            <div class="logo-area">
+                <span id="trigger-sidebar" class="toolbar-trigger toolbar-icon-bg">
+                    <a data-toggle="tooltips" data-placement="right" title="Toggle Sidebar">
+                        <span class="icon-bg">
+                            <i class="ti ti-menu"></i>
+                        </span>
+                    </a>
+                </span>
+                <a class="nav navbar-brand" href="/" style="width: 80px";>Exquifit</a>
+            </div><!-- logo-area -->
+
+            <ul class="nav navbar-nav toolbar pull-right">
+                
+                
+
+
+                
+                
+
+                <span class="username" style=" margin-left: 8px; margin-right: 8px;">{{session['name']}}</span>
+
+                <a href="/logout"><button type="button" class="btn btn-default btn-sm" style="
+                    padding-top: 8px;
+                    padding-bottom: 8px;
+                    padding-left: 0px;
+                    border-left-width: 0px;
+                    border-bottom-width: 0px;
+                    border-right-width: 0px;
+                    padding-right: 8px;
+                    border-top-width: 0px;
+                    height: 56px;
+                    width: 56px;
+                    margin-right: 8px;
+                    margin-left: 8px;
+                ">
+                    <span class="glyphicon glyphicon-log-out"></span> Log out
+                </button></a>
+
+                
+            </ul>
+        </header>
+
+        <div id="wrapper">
+            <div id="layout-static">
+                <div class="static-sidebar-wrapper sidebar-default">
+                    <div class="static-sidebar">
+                        <div class="sidebar">
+                            <div class="widget">
+                                <div class="widget-body">
+                                    <div class="userinfo">
+                                        <div class="avatar">
+                                        <img src="/static/assets/demo/avatar/avatar_15.png" class="img-responsive img-circle"> 
+                                        </div>
+
+                                        <div class="info">
+                                            <span class="username">{{session['name']}}</span>
+                                            <span class="useremail">{{session['email']}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget stay-on-collapse" id="widget-sidebar">
+                                <nav role="navigation" class="widget-body">
+                                    <ul class="acc-menu">
+                                        <li class="nav-separator"><span>Explore</span></li>
+                                        <h2><li><a href="/dashboard"><i class="fa fa-dashboard"></i>&nbsp;
+                                        <span style="text-align: right;">Dashboard</span></a></li></h2>
+                                        
+                                        <h2><li><a href="/steps"><i class="fa fa-road"></i>&nbsp;
+                                        <span style="text-align: right;">Steps</span></a></li></h2>
+
+                                        <h2><li><a href="/calories"><i class="glyphicon glyphicon-fire"></i>
+                                        <span style="text-align: right;"> Calories</span></a></li></h2>
+
+                                        <h2><li><a href="/weight"><i class="glyphicon glyphicon-dashboard"></i>&nbsp; 
+                                        <span style="text-align: right;"> Weight</span></a></li></h2>
+
+                                        <h2><li><a href="/heartrate"><i class="glyphicon glyphicon-heart"></i> &nbsp;
+                                        <span style="text-align: right;"> Heart</span></a></li></h2>
+
+                                        <h3><li><a href="javascript:;"><i class="glyphicon glyphicon-cutlery">&nbsp;</i> 
+                                        <span style="text-align: right;"> Food</span></a>
+                                        </h3>
+                                            <ul class="acc-menu">
+                                            <h4>
+                                                <li><a href="/food">Enter Food Data</a></li>
+                                                <li><a href="/getrecommendation">Diet Recommendation</a></li>
+                                            </h4>
+                                            </ul>
+                                        </li>
+
+
+                                        <h2><li><a href="/logout"><i class="glyphicon glyphicon-log-out"></i>&nbsp;
+                                        <span>Logout</span></a></li></h2>
+
+                                    </ul>
+
+
+
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="static-content-wrapper">
+                    <div class="static-content">
+                        <div class="page-content">
+                            <div class="container-fluid">
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h1 class="page-header">
+                                                Update Profile
+                                            </h1>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h3>
+                                                Update Weight Details
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                <br>
+                                <div data-widget-group="group1">
+                                    <div class="row">
+                                        <div class="col-lg-1"></div>
+                                        <div class="col-md-10">
+                                            
+                                            <div class="panel" data-widget='{"draggable": "false"}'>
+                                                
+                                                <div class="panel-body">
+                                                    <div class="tab-content">
+                                                        <div class="tab-pane active" id="horizontal-form">
+                                                            <form class="form-horizontal" id="foodEntryForm"  method="post"  action="/profileDetailsUpdate">
+                                                                  <div class="form-group">
+                                                                    <label for="mediuminput" class="col-sm-2 control-label">Current Weight</label>
+
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" class="form-control" name="curweight" id="mediuminput" placeholder="in lbs">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="mediuminput" class="col-sm-2 control-label">Goal Weight</label>
+
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" class="form-control" name="goalweight" id="mediuminput" placeholder="in lbs">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    
+                                                                </div>
+                                                                <center>
+                                                                 <input type="submit" class="btn-primary btn" value="Submit"> 
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                 <button class="btn-default btn">Cancel</button>
+                                                                 </center>
+                                                            </form>
+                                                        </div>
+                                                        
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1"></div>
+                                    </div>
+                                </div>
+                                
+
+
+                            </div> <!-- .container-fluid
+
+                    </div> <!-- #page-content -->
+                </div>
+                <footer role="contentinfo">
+                    <div class="clearfix">
+                        <ul class="list-unstyled list-inline pull-left">
+                            <li><h6 style="margin: 0;">&copy; Exquifit - Activity & Fitness Tracking</h6></li>
+                        </ul>
+                        <button class="pull-right btn btn-link btn-xs hidden-print" id="back-to-top"><i class="ti ti-arrow-up"></i></button>
+                    </div>
+                    <script type="text/javascript" src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> 
+          <style type="text/css">
+          .goog-te-banner-frame.skiptranslate{display:none!important;}
+          body{top:0px!important;}
+          </style>
+                </footer>
+                </div>
+            </div>
+        </div>
+
+
+ 
+    
+    <!-- Switcher -->
+{%- block scripts -%}
+{% endblock %}
+
+    <!-- Load site level scripts -->
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script> -->
+
+<script src="/static/components/highcharts/highcharts.js"></script>
+<script src="/static/components/highcharts/highcharts-more.js"></script>
+<script src="/static/assets/scripts/getDate.js"></script>
+
+
+<script type="text/javascript" src="static/assets/js/jqueryui-1.10.3.min.js"></script>                      <!-- Load jQueryUI -->
+
+<script type="text/javascript" src="static/assets/js/enquire.min.js"></script>                                     <!-- Load Enquire -->
+
+
+<script type="text/javascript" src="static/assets/plugins/velocityjs/velocity.min.js"></script>                    <!-- Load Velocity for Animated Content -->
+<script type="text/javascript" src="static/assets/plugins/velocityjs/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="static/assets/plugins/wijets/wijets.js"></script>                          <!-- Wijet -->
+
+<script type="text/javascript" src="static/assets/plugins/codeprettifier/prettify.js"></script>                <!-- Code Prettifier  -->
+<script type="text/javascript" src="static/assets/plugins/bootstrap-switch/bootstrap-switch.js"></script>      <!-- Swith/Toggle Button -->
+
+<script type="text/javascript" src="static/assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js"></script>  <!-- Bootstrap Tabdrop -->
+
+<script type="text/javascript" src="static/assets/plugins/iCheck/icheck.min.js"></script>                      <!-- iCheck -->
+
+<script type="text/javascript" src="static/assets/plugins/nanoScroller/js/jquery.nanoscroller.min.js"></script> <!-- nano scroller -->
+
+<script type="text/javascript" src="static/assets/js/application.js"></script>
+    <script>
+    // Get the <datalist> and <input> elements.
+    var dataList = document.getElementById('json-datalist');
+    var input = document.getElementById('ajax');
+    input.addEventListener("keyup", function (event) {
+    $(".newclass").each(function() {
+    				    $(this).remove();
+    				});
+    		$.ajax
+                ({
+                    type: "GET",
+                    url: "https://localhost:5000/fooditems",
+                    dataType: 'json',
+                    async: false,
+                    data: "keyword="+$(input).val(),
+                    success: function (data){
+    			var jsonOptions = data.result;
+    			
+    			      // Loop over the JSON array.
+    			      jsonOptions.forEach(function(item) {
+    				//alert(item['name'])
+    				// Create a new <option> element.
+    				var option = document.createElement('option');
+    				// Set the value using the item in the JSON array.
+    				option.value = item['name'];
+    				$(option).attr("class","newclass");
+    				// Add the <option> element to the <datalist>.
+    				dataList.appendChild(option);
+    			      });
+
+    			      // Update the placeholder text.
+    			      input.placeholder = "e.g. datalist";
+
+                    }
+                });
+          }, false);
+</script>
+    <!-- End loading page level scripts-->
+    </body>
+
+
+</html>

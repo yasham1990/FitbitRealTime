@@ -1,0 +1,22 @@
+#intro {
+  section {
+    min-height: 95vh;
+    position: relative;
+    padding: 15px;
+
+    &#landing {
+      h1{
+        margin-top: 30vh;
+        font-size: 6em;
+        color: $white;
+        small {
+          font-size: .7em;
+        }
+      }
+    }
+    &#about {
+      background: $white;
+    }
+
+  }
+}

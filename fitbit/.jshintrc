@@ -1,0 +1,13 @@
+{
+  "undef": true,
+  "unused": false,
+  "predef": [
+    //Browser Globals
+    "window",
+    "console",
+    //tests
+    "document",
+    "setTimeout",
+    "setInterval"
+  ]
+}
